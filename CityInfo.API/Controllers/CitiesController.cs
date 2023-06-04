@@ -14,9 +14,9 @@ namespace CityInfo.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<CityDto> getCity([FromRoute] int id)
+        public ActionResult<CityDto> GetCity([FromRoute] int id)
         {
-            var city = CitiesDataStore.current.Cities.FirstOrDefault(c => c.id == id);
+            var city = CitiesDataStore.current.Cities.Find(c => c.Id == id);
             if (city == null)
             {
                 return NotFound();

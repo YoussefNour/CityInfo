@@ -17,11 +17,11 @@ namespace CityInfo.API.Controllers
         {
             _fileExtentionTypeProvider =
                 fileExtentionContentTypeProvider
-                ?? throw new System.ArgumentException(nameof(fileExtentionContentTypeProvider));
+                ?? throw new ArgumentException(nameof(fileExtentionContentTypeProvider));
         }
 
         [HttpGet("{fileid}")]
-        public ActionResult GetFile(string fileid)
+        public ActionResult GetFile()
         {
             var path = "E-Commerce Project.pdf";
             if (!System.IO.File.Exists(path))

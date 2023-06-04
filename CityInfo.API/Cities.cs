@@ -14,7 +14,7 @@ namespace CityInfo.API
             {
                 new CityDto()
                 {
-                    id = 1,
+                    Id = 1,
                     Name = "Cairo",
                     Description = "Capital of Egypt",
                     PointsOfInterest = new List<PointOfInterestDto>()
@@ -35,7 +35,7 @@ namespace CityInfo.API
                 },
                 new CityDto()
                 {
-                    id = 2,
+                    Id = 2,
                     Name = "Alexandria",
                     Description = "largest shore country of Egypt",
                     PointsOfInterest = new List<PointOfInterestDto>()
@@ -56,7 +56,7 @@ namespace CityInfo.API
                 },
                 new CityDto()
                 {
-                    id = 3,
+                    Id = 3,
                     Name = "Aswan",
                     Description = "South most city of Egypt"
                 }

@@ -2,7 +2,7 @@ namespace CityInfo.API.models
 {
     public class CityDto
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
         public String Name { get; set; } = String.Empty;
 

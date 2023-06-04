@@ -33,7 +33,7 @@ namespace CityInfo.API.Controllers
             try
             {
                 // throw new Exception("Could not load point of interests");
-                var city = CitiesDataStore.current.Cities.Find(c => c.id == cityid);
+                var city = CitiesDataStore.current.Cities.Find(c => c.Id == cityid);
 
                 if (city == null)
                 {
@@ -63,7 +63,7 @@ namespace CityInfo.API.Controllers
             int pointofInterestID
         )
         {
-            var city = CitiesDataStore.current.Cities.Find(c => c.id == cityid);
+            var city = CitiesDataStore.current.Cities.Find(c => c.Id == cityid);
 
             var poi = city?.PointsOfInterest.Find(p => p.Id == pointofInterestID);
 
@@ -83,7 +83,7 @@ namespace CityInfo.API.Controllers
             PointOfInterestForCreationDto poi
         )
         {
-            var city = CitiesDataStore.current.Cities.Find(c => c.id == cityId);
+            var city = CitiesDataStore.current.Cities.Find(c => c.Id == cityId);
             if (city == null)
             {
                 return NotFound();
@@ -113,7 +113,7 @@ namespace CityInfo.API.Controllers
             PointOfInterestForUpdateDto pointOfInterest
         )
         {
-            var city = CitiesDataStore.current.Cities.Find(c => c.id == cityId);
+            var city = CitiesDataStore.current.Cities.Find(c => c.Id == cityId);
             if (city == null)
             {
                 return NotFound();
@@ -137,7 +137,7 @@ namespace CityInfo.API.Controllers
             JsonPatchDocument<PointOfInterestForUpdateDto> patchDocument
         )
         {
-            var city = CitiesDataStore.current.Cities.Find(c => c.id == cityId);
+            var city = CitiesDataStore.current.Cities.Find(c => c.Id == cityId);
             if (city == null)
             {
                 return NotFound();
@@ -178,7 +178,7 @@ namespace CityInfo.API.Controllers
         [HttpDelete("{pointofinterestId}")]
         public ActionResult DeletePointOfInterest(int cityId, int pointofinterestId)
         {
-            var city = CitiesDataStore.current.Cities.Find(c => c.id == cityId);
+            var city = CitiesDataStore.current.Cities.Find(c => c.Id == cityId);
             if (city == null)
             {
                 return NotFound();
