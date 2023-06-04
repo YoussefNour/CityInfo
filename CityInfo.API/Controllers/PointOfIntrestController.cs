@@ -15,9 +15,13 @@ namespace CityInfo.API.Controllers
     [Route("api/cities/{cityId}/pointsofinterest")]
     public class PointOfIntrestController : ControllerBase
     {
-        public ILogger<PointOfIntrestController> _Logger;
-        public IMailService _MailService;
-        public PointOfIntrestController(ILogger<PointOfIntrestController> logger, IMailService mailService)
+        private readonly ILogger<PointOfIntrestController> _Logger;
+        private readonly IMailService _MailService;
+
+        public PointOfIntrestController(
+            ILogger<PointOfIntrestController> logger,
+            IMailService mailService
+        )
         {
             _Logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _MailService = mailService ?? throw new ArgumentNullException(nameof(mailService));
@@ -189,7 +193,10 @@ namespace CityInfo.API.Controllers
             }
 
             city.PointsOfInterest.Remove(pointOfInterestFromDataStore);
-
+            _MailService.Send(
+                "Point of interest deleted",
+                $"Point of interest {pointOfInterestFromDataStore.Name} with id {pointOfInterestFromDataStore.Id} was deleted"
+            );
             return NoContent();
         }
     }
