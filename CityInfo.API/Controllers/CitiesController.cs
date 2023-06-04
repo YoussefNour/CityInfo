@@ -7,16 +7,23 @@ namespace CityInfo.API.Controllers
     [Route("api/cities")]
     public class CitiesController : ControllerBase //not controller because controller has helper functions that help return views but controller base is smaller and fits apis more
     {
+        private readonly CitiesDataStore current;
+
+        public CitiesController(CitiesDataStore citiesDataStore)
+        {
+            current = citiesDataStore ?? throw new ArgumentNullException(nameof(citiesDataStore));
+        }
+
         [HttpGet]
         public ActionResult<IEnumerable<CityDto>> GetCities()
         {
-            return Ok(CitiesDataStore.current.Cities);
+            return Ok(current.Cities);
         }
 
         [HttpGet("{id}")]
         public ActionResult<CityDto> GetCity([FromRoute] int id)
         {
-            var city = CitiesDataStore.current.Cities.Find(c => c.Id == id);
+            var city = current.Cities.Find(c => c.Id == id);
             if (city == null)
             {
                 return NotFound();
