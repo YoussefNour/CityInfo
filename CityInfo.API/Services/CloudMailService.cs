@@ -1,14 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace CityInfo.API.Services
 {
-    public class CloudMailService: IMailService
+    public class CloudMailService : IMailService
     {
-        private readonly string _mailTo = "admin@mycompany.com";
-        private readonly string _mailFrom = "noreply@mycompany.com";
+        private readonly string _mailTo = string.Empty;
+        private readonly string _mailFrom = string.Empty;
+
+        public CloudMailService(IConfiguration configuration)
+        {
+            _mailTo = configuration["mailSettings:mailToAddress"];
+            _mailFrom = configuration["mailSettings:mailFromAddress"];
+        }
 
         public void Send(string Subject, string Body)
         {
