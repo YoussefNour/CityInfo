@@ -1,0 +1,30 @@
+using CityInfo.API.models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace CityInfo.API.Controllers
+{
+    [ApiController]
+    [Route("api/cities")]
+    public class CitiesController : ControllerBase //not controller because controller has helper functions that help return views but controller base is smaller and fits apis more
+    {
+        [HttpGet]
+        public ActionResult<IEnumerable<CityDto>> GetCities()
+        {
+            return Ok(CitiesDataStore.current.Cities);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<CityDto> getCity([FromRoute] int id)
+        {
+            var city = CitiesDataStore.current.Cities.FirstOrDefault(c => c.id == id);
+            if (city == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(city);
+            }
+        }
+    }
+}
