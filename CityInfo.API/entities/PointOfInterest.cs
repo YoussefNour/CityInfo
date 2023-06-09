@@ -11,13 +11,16 @@ namespace CityInfo.API.entities
 
         [Required]
         [MaxLength(50)]
-        public String Name { get; set; } = String.Empty;
+        public string Name { get; set; } = String.Empty;
+
+        [MaxLength(200)]
+        public string Description { get; set; } = String.Empty;
 
         [ForeignKey("CityId")]
         public City City { get; set; }
         public int CityId { get; set; }
 
-        public PointOfInterest(String name)
+        public PointOfInterest(string name)
         {
             Name = name;
         }
