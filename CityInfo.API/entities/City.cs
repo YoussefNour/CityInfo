@@ -11,13 +11,13 @@ namespace CityInfo.API.entities
 
         [Required]
         [MaxLength(50)]
-        public String Name { get; set; }
+        public string Name { get; set; }
 
         [MaxLength(200)]
-        public String? Description { get; set; }
+        public string? Description { get; set; }
         public List<PointOfInterest> PointsOfInterest { get; set; } = new List<PointOfInterest>();
 
-        public City(String name)
+        public City(string name)
         {
             Name = name;
         }
