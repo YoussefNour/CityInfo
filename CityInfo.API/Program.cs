@@ -40,8 +40,13 @@ builder.Services.AddTransient<IMailService, CloudMailService>();
 builder.Services.AddSingleton<CitiesDataStore>();
 
 builder.Services.AddDbContext<CityInfoContext>(
-    options => options.UseSqlite("Data Source=CityInfo.db")
+    options =>
+        options.UseSqlite(builder.Configuration.GetConnectionString("CityInfoDbConnectionString"))
 );
+
+builder.Services.AddScoped<ICityInfoRepository, CityInfoRepository>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

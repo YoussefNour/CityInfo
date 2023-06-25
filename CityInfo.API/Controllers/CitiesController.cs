@@ -1,4 +1,5 @@
 using CityInfo.API.models;
+using CityInfo.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CityInfo.API.Controllers
@@ -7,31 +8,39 @@ namespace CityInfo.API.Controllers
     [Route("api/cities")]
     public class CitiesController : ControllerBase //not controller because controller has helper functions that help return views but controller base is smaller and fits apis more
     {
-        private readonly CitiesDataStore current;
+        private readonly ICityInfoRepository _cityInfoRepository;
 
-        public CitiesController(CitiesDataStore citiesDataStore)
+        public CitiesController(ICityInfoRepository citiesDataStore)
         {
-            current = citiesDataStore ?? throw new ArgumentNullException(nameof(citiesDataStore));
+            _cityInfoRepository = citiesDataStore ?? throw new ArgumentNullException(nameof(citiesDataStore));
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<CityDto>> GetCities()
+        public async Task<ActionResult<IEnumerable<CityWithoutPointOfInterestDto>>> GetCities()
         {
-            return Ok(current.Cities);
+            var cities = await _cityInfoRepository.GetCitiesAsync();
+            var citiesDto = cities.Select(c => new CityWithoutPointOfInterestDto
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Description = c.Description
+            });
+            return Ok(citiesDto);
         }
 
         [HttpGet("{id}")]
         public ActionResult<CityDto> GetCity([FromRoute] int id)
         {
-            var city = current.Cities.Find(c => c.Id == id);
-            if (city == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return Ok(city);
-            }
+            // var city = _cityInfoRepository.Cities.Find(c => c.Id == id);
+            // if (city == null)
+            // {
+            //     return NotFound();
+            // }
+            // else
+            // {
+            //     return Ok(city);
+            // }
+            return Ok();
         }
     }
 }
