@@ -43,5 +43,10 @@ namespace CityInfo.API.Services
                 p => p.CityId == cityId && p.Id == pointOfInterestId
             );
         }
+
+        public async Task<bool> CityExistsAsync(int cityId)
+        {
+            return await _context.Cities.AnyAsync(c => c.Id == cityId);
+        }
     }
 }

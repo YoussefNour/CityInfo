@@ -20,7 +20,7 @@ namespace CityInfo.API.Services
 
         // Task<bool> SaveChangesAsync();
 
-        // Task<bool> CityExistsAsync(int cityId);
+        Task<bool> CityExistsAsync(int cityId);
 
         // Task<bool> PointOfInterestExistsAsync(int pointOfInterestId);
 
