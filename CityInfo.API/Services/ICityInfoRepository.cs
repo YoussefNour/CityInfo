@@ -18,7 +18,7 @@ namespace CityInfo.API.Services
 
         // void DeletePointOfInterest(PointOfInterest pointOfInterest);
 
-        // Task<bool> SaveChangesAsync();
+        Task<bool> SaveChangesAsync();
 
         Task<bool> CityExistsAsync(int cityId);
 
@@ -29,6 +29,6 @@ namespace CityInfo.API.Services
         //     IEnumerable<int> pointOfInterestIds
         // );
 
-        // void AddPointsOfInterestForCity(int cityId, IEnumerable<PointOfInterest> pointOfInterest);
+        Task AddPointsOfInterestForCityAsync(int cityId, PointOfInterest pointOfInterest);
     }
 }
