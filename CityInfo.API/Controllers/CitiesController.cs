@@ -2,6 +2,7 @@ using CityInfo.API.models;
 using CityInfo.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using System.Text.Json;
 
 namespace CityInfo.API.Controllers
 {
@@ -30,13 +31,15 @@ namespace CityInfo.API.Controllers
         {
             if (pageSize > maxCitiesPageSize)
                 return BadRequest($"Page size cannot be greater than {maxCitiesPageSize}");
-            var cities = await _cityInfoRepository.GetCitiesAsync(
+            var (citiesEntities, pagintationMetaData) = await _cityInfoRepository.GetCitiesAsync(
                 name,
                 searchQuery,
                 pageNumber,
                 pageSize
             );
-            return Ok(_mapper.Map<IEnumerable<CityWithoutPointOfInterestDto>>(cities));
+
+            Response.Headers.Add("X-Pagination", JsonSerializer.Serialize(pagintationMetaData));
+            return Ok(_mapper.Map<IEnumerable<CityWithoutPointOfInterestDto>>(citiesEntities));
         }
 
         [HttpGet("{id}")]
