@@ -39,6 +39,11 @@ namespace CityInfo.API.Controllers
         {
             try
             {
+                var cityname = User.Claims.FirstOrDefault(c => c.Type == "City")?.Value;
+
+                if (!await _CityInfoRepository.CityNameMatchesCityIdAsync(cityname, cityid))
+                    return Forbid();
+
                 var cityExist = await _CityInfoRepository.CityExistsAsync(cityid);
                 if (!cityExist)
                 {
@@ -101,7 +106,8 @@ namespace CityInfo.API.Controllers
         [HttpPost]
         public async Task<ActionResult<PointOfInterestDto>> CreatePointOfInterest(
             int cityId,
-            PointOfInterestForCreationDto poi)
+            PointOfInterestForCreationDto poi
+        )
         {
             if (!await _CityInfoRepository.CityExistsAsync(cityId))
             {
@@ -116,12 +122,11 @@ namespace CityInfo.API.Controllers
 
             var createdPointOfInterest = _Mapper.Map<PointOfInterestDto>(finalPointOfInterest);
 
-            return CreatedAtRoute("GetPointOfInterest", new
-            {
-                cityId = cityId,
-                pointofinterestId = createdPointOfInterest.Id
-            },
-            createdPointOfInterest);
+            return CreatedAtRoute(
+                "GetPointOfInterest",
+                new { cityId = cityId, pointofinterestId = createdPointOfInterest.Id },
+                createdPointOfInterest
+            );
         }
 
         [HttpPut("{poiid}")]
@@ -136,7 +141,8 @@ namespace CityInfo.API.Controllers
                 return NotFound();
             }
 
-            var pointofinterestfromdatabase = await _CityInfoRepository.GetPointOfInterestForCityAsync(cityid, poiid);
+            var pointofinterestfromdatabase =
+                await _CityInfoRepository.GetPointOfInterestForCityAsync(cityid, poiid);
             if (pointofinterestfromdatabase == null)
             {
                 return NotFound();
@@ -158,13 +164,18 @@ namespace CityInfo.API.Controllers
                 return NotFound();
             }
 
-            var pointOfInterestEntity = await _CityInfoRepository.GetPointOfInterestForCityAsync(cityId, pointofinterestId);
+            var pointOfInterestEntity = await _CityInfoRepository.GetPointOfInterestForCityAsync(
+                cityId,
+                pointofinterestId
+            );
             if (pointOfInterestEntity == null)
             {
                 return NotFound();
             }
 
-            var pointOfInterestToPatch = _Mapper.Map<PointOfInterestForUpdateDto>(pointOfInterestEntity);
+            var pointOfInterestToPatch = _Mapper.Map<PointOfInterestForUpdateDto>(
+                pointOfInterestEntity
+            );
 
             patchDocument.ApplyTo(pointOfInterestToPatch, ModelState);
 
@@ -193,7 +204,10 @@ namespace CityInfo.API.Controllers
                 return NotFound();
             }
 
-            var pointOfInterestEntity = await _CityInfoRepository.GetPointOfInterestForCityAsync(cityId, pointofinterestId);
+            var pointOfInterestEntity = await _CityInfoRepository.GetPointOfInterestForCityAsync(
+                cityId,
+                pointofinterestId
+            );
             if (pointOfInterestEntity == null)
             {
                 return NotFound();
