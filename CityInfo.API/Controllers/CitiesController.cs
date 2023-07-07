@@ -3,10 +3,12 @@ using CityInfo.API.Services;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CityInfo.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/cities")]
     public class CitiesController : ControllerBase //not controller because controller has helper functions that help return views but controller base is smaller and fits apis more
     {
