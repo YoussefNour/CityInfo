@@ -82,7 +82,7 @@ namespace CityInfo.API.Controllers
 
         private CityInfoUser ValidateUserCredential(string? username, string? password)
         {
-            return new CityInfoUser(1, "YoussefOssama", "Youssef", "Ossama", "Cairo");
+            return new CityInfoUser(1, "YoussefOssama", "Youssef", "Ossama", "Alexandria");
         }
     }
 }
